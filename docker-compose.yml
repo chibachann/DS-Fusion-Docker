@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  ds-fusion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chibachann/ds-fusion:latest
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    volumes:
+      - ./:/app
+    working_dir: /app
+    deploy:
+      restart_policy:
+        condition: none
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
